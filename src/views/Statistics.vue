@@ -1,6 +1,7 @@
 <template>
   <div>
     statictic.vue
+    <Nav />
   </div>
 </template>
 

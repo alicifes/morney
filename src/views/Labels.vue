@@ -1,12 +1,13 @@
 <template>
   <div>
-    这里什么都没有
+    labels.vue
+    <Nav />
   </div>
 </template>
 
 <script>
 export default {
-  name: "NotFund"
+  name: "Labels"
 }
 </script>
 
