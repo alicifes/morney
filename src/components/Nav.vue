@@ -1,23 +1,50 @@
 <template>
-  <div>
-    <router-link to="/money">
-      记账
-    </router-link>
-    <router-link to="/labels">
+  <nav>
+    <router-link class="item" to="/money">
+      <Icon name="money"/>
+     记账
+      </router-link>
+    <router-link  class="item" to="/labels">
+      <Icon name="labels"/>
       标签
     </router-link>
-    <router-link to="/statistics">
+    <router-link class="item" to="/statistics">
+      <Icon name="statistics"/>
      统计
     </router-link>
-  </div>
+  </nav>
 </template>
 
-<script>
+<script lang="ts">
+// eslint-disable-next-line no-undef
+let importAll = (requireContext:__WebpackModuleApi.RequireContext)=>requireContext.keys().forEach(requireContext)
+try{
+  importAll(require.context('../assets/icons',true,/\.svg$/));  //统一引入代码
+}catch (error){
+  console.log(error);
+}
 export default {
   name: "Nav"
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+nav{
+  display: flex;
+  box-shadow:0 0 3px rgba(0,0,0,0.25);
+  flex-directin:row;
+  font-size:12px;
+  > .item {
+    padding: 2px 0;
+    width: 33.333333%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .icon{
+      height: 32px;
+      width: 32px;
+    }
+  }
+}
 </style>
