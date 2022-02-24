@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <svg class="item">
+    <svg class="icon">
       <use :xlink:href="'#'+name"></use>
     </svg>
-  </div>
 </template>
 
 <script lang="ts">
@@ -21,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-.item{
+.icon{
   width: 1em; height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
