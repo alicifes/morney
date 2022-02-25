@@ -2,7 +2,7 @@
   <div>
     <Layout>
       <div class="tags">
-       <ul class="labels">
+       <ul class="current">
          <li>衣</li>
          <li>食</li>
          <li>住</li>
@@ -15,12 +15,12 @@
       <div>
         <label class="notes">
           <span class="name">备注</span>
-          <input type="text"/>
+          <input type="text" placeholder="请在这里输入文字"/>
         </label>
       </div>
       <div>
         <ul class="types">
-          <li>支出</li>
+          <li class="selected">支出</li>
           <li>收入</li>
         </ul>
       </div>
@@ -57,19 +57,69 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tags{
-  font-size: 14px;
-  >.labels{
+.types{
+  background: #c4c4c4;
+  display: flex;
+  font-size: 24px;
+  text-align: center;
+  >li{
+    width: 50%;
+    padding:21px 0;
     display: flex;
-    >li{
-      padding-left: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &.selected::after{
+      content: '';
+      position: absolute;
+      left:0;
+      bottom:0;
+      width: 100%;
+      height: 4px;
+      background: #333333;
     }
   }
+
 }
-.addtag{
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid black;
-  padding:0 2px;
+.notes{
+  background:#f5f5f5;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  .name{
+    padding:0 16px;
+  }
+  input{
+    padding: 25px 0;
+    flex-grow: 1;
+    border: none;
+    background: #f5f5f5;
+  }
+}
+.tags{
+  font-size: 14px;
+  padding: 16px;
+  >.current{
+    display: flex;
+    >li{
+      background:#d9d9d9;
+      margin-right: 16px;
+      $h:24px;
+      height: $h;
+      line-height: $h;
+      padding: 0 16px;
+      border-radius: $h/2;
+    }
+  }
+  > .new{
+    padding-top: 16px;
+      button{
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid;
+      padding:0 4px;
+      color: #d9d9d9;
+    }
+  }
 }
 </style>
