@@ -14,7 +14,12 @@
 
 <script>
 export default {
-  name: "Tags"
+  name: "Tags",
+  data(){
+    return{
+
+    }
+  }
 }
 </script>
 
