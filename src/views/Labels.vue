@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="background">
     <Layout>
       <div>
         <div>
@@ -36,18 +36,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.background{
+  background: #f5f5f5;
+}
 .tags{
   background: white;
   font-size: 16px;
+  padding-left: 16px;
   >li{
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 44px;
-    border-bottom: 1px solid #dfdee1;
-    margin-left: 15px;
+    border-bottom: 1px solid #e6e6e6;
     >.icon{
-      color: #333333;
+      color: #666;
+      margin-right: 16px;
+      width:18px;
+      height: 18px;
     }
   }
 }
@@ -58,10 +64,9 @@ export default {
   border:none;
   padding: 9px 16px;
   &-wrapper{
-   margin-top: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    padding: 16px;
+    margin-top: 44-16px;
   }
 }
 
