@@ -1,28 +1,33 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Money from '@/views/Money.vue'
-import Labels from '@/views/Labels.vue'
-import Statistics from '@/views/Statistics.vue'
-import NotFound from '@/views/Notfound.vue'
-Vue.use(VueRouter)
+import Vue from 'vue';
+import VueRouter, {RouteConfig} from 'vue-router';
+import Money from '@/views/Money.vue';
+import Labels from '@/views/Labels.vue';
+import Statistics from '@/views/Statistics.vue';
+import NotFound from '@/views/Notfound.vue';
+import EditLabel from '@/views/EditLabel.vue'
+
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    redirect:'/money'
-  },{
-    path:'/money',
-    component:Money
-  },{
-    path:'/labels',
-    component:Labels
-  },{
-    path:'/statistics' ,
-    component:Statistics
-  },{
-    path:'*',
-    component:NotFound
+    redirect: '/money'
+  }, {
+    path: '/money',
+    component: Money
+  }, {
+    path: '/labels',
+    component: Labels
+  }, {
+    path: '/statistics',
+    component: Statistics
+  }, {
+    path: '/labels/edit/:id',
+    component: EditLabel
+  }, {
+    path: '*',
+    component: NotFound
   }
   /*{
     path: '/about',
@@ -32,10 +37,10 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/!* webpackChunkName: "about" *!/ '../views/About.vue')
   }*/
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
-export default router
+export default router;
