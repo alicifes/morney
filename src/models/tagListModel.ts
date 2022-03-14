@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 const loaclStorageKeyName = 'tagList';
 type Tag = {
   id: string;
@@ -16,13 +18,12 @@ const tagListModel: TagListModel = {
   create(name) {
     //this.data= [{id:'1'},{name:'2'}]
     const names = this.data.map(item => item.name);
-    console.log(name);
-    console.log(names);
     if (names.indexOf(name) >= 0) {
       console.log('enter');
       return 'duplicated';
     }
-    this.data.push({id: name, name: name});
+    const id = createId().toString();
+    this.data.push({id, name: name});
     this.save();
     return 'success';
 
