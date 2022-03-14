@@ -2,7 +2,7 @@
   <div>
     <label class="formItem">
       <span class="name">{{fieldName}}</span>
-      <input v-model="value" type="text" :placeholder="this.placeholder"/>
+      <input :value="value" type="text" :placeholder="this.placeholder" @input="onValueChaged($event.target.value)"/>
     </label>
   </div>
 </template>
@@ -13,10 +13,10 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class FormItem extends Vue {
-  value = '';
 
   @Prop({required:true}) fieldName! :string;
   @Prop() placeholder?:string;
+  @Prop({default:''}) readonly value!:string;
   @Watch('value')
   onValueChaged(value:string) {
     this.$emit('update:value',value)
