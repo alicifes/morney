@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="createTag-wrapper">
-        <button class="createTag" @click="createTag">新建标签</button>
+        <Button class="createTag" @click="createTag">新建标签</Button>
       </div>
     </Layout>
   </div>
@@ -21,9 +21,12 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import {tagListModel} from '@/models/tagListModel';
+import Button from '@/components/Button.vue';
 
 tagListModel.fetch();//通过该方法使tagListModel内部获得自己的状态
-@Component
+@Component({
+  components: {Button}
+})
 export default class Labels extends Vue {
   tags = tagListModel.data;   //获得tag内部的全部的data
   createTag(){

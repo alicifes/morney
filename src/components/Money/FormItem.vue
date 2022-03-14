@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label class="notes">
-      <span class="name">备注</span>
-      <input v-model="value" type="text" placeholder="请在这里输入文字"/>
+    <label class="formItem">
+      <span class="name">{{fieldName}}</span>
+      <input v-model="value" type="text" :placeholder="this.placeholder"/>
     </label>
   </div>
 </template>
@@ -12,9 +12,11 @@ import Vue from 'vue';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
-export default class Notes extends Vue {
+export default class FormItem extends Vue {
   value = '';
 
+  @Prop({required:true}) fieldName! :string;
+  @Prop() placeholder?:string;
   @Watch('value')
   onValueChaged(value:string) {
     this.$emit('update:value',value)
@@ -23,8 +25,7 @@ export default class Notes extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.notes {
-  background: #f5f5f5;
+.formItem {
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -34,10 +35,10 @@ export default class Notes extends Vue {
   }
 
   input {
-    padding: 25px 0;
+    height: 40px;
     flex-grow: 1;
     border: none;
-    background: #f5f5f5;
+    background: transparent;
   }
 }
 </style>
