@@ -4,7 +4,8 @@
       <div>
         <div>
           <div class="tags">
-            <router-link class="tag" :to="`/labels/edit/${tag.id}`"  v-for="tag in tags" :key="tag.id"><span>{{tag.name}}</span>
+            <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
+              <span>{{ tag.name }}</span>
               <icon name="right"/>
             </router-link>
           </div>
@@ -28,15 +29,10 @@ import Button from '@/components/Button.vue';
 })
 export default class Labels extends Vue {
   tags = window.tagList;   //获得tag内部的全部的data
-  createTag(){
+  createTag() {
     const name = window.prompt('请输入标签名');
-    if(name){
-       const message = tagListModel.create(name);
-       if(message === 'duplicated'){
-         window.alert('请输入不同的标签名称  ')
-       }else if(message === 'success'){
-         window.alert('添加成功')
-       }
+    if (name) {
+      window.creatTag(name);
     }
   }
 }
@@ -52,7 +48,7 @@ export default class Labels extends Vue {
   font-size: 16px;
   padding-left: 16px;
 
-  > .tag{
+  > .tag {
     display: flex;
     align-items: center;
     justify-content: space-between;
