@@ -19,6 +19,9 @@ type TagListModel = {
 }
 interface Window{
  tagList:Tag[];
- creatTag:(name:string)=>void
+ creatTag:(name:string)=>void;
+ removeTag:(name:string)=>boolean;
+ updateTag:TagListModel['update'];   //这两个的格式相同
+  findTag:(id:string)=>Tag|undefined;
 }
 
