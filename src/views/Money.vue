@@ -1,11 +1,12 @@
 <template>
   <Layout class-prefix="layout">
+    {{record}}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <div class="notes">
       <FormItem @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags :data-source="tags" @update:value="onUpdateTags"/>
   </Layout>
 </template>
 
@@ -36,11 +37,11 @@ window.localStorage.setItem('version', '0.0.2');
 })
 export default class Money extends Vue {
   recordList: RecordItem[] = recordListModel.fetch();
-  tagList  = tagListModel.fetch();
-  tags = this.tagList;
+  tags = window.tagList;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
   onUpdateTags(value: string []) {
+    tagListModel.fetch();
     this.record.tags = value;
   }
 
