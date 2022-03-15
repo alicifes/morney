@@ -1,6 +1,6 @@
 import createId from '@/lib/createId';
 
-const loaclStorageKeyName = 'tagList';
+const localStorageKeyName = 'tagList';
 type Tag = {
   id: string;
   name: string;
@@ -46,11 +46,11 @@ const tagListModel: TagListModel = {
     }
   },
   fetch() {
-    this.data = JSON.parse(window.localStorage.getItem(loaclStorageKeyName) || '[]');
+    this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
     return this.data;
   },
   save() {
-    window.localStorage.setItem(loaclStorageKeyName, JSON.stringify(this.data));
+    window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
   remove(id: string) {
     let index = -1;
