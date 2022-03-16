@@ -17,10 +17,11 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component } from 'vue-property-decorator';
+import store from '@/store/index2';
 
 const version = window.localStorage.getItem('version') || '0';
 if (version === '0.0.1') {  //数据迁移
-  const recordList = window.recordList;
+  const recordList = store.recordList;
   recordList.forEach(record => {
     record.createdAt = new Date(2020, 1, 1);
   });
@@ -34,12 +35,12 @@ window.localStorage.setItem('version', '0.0.2');
   }
 })
 export default class Money extends Vue {
-  recordList = window.recordList;
-  tags = window.tagList;
+  recordList = store.recordList;
+  tags = store.tagList;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
   onUpdateTags(value: string []) {
-    window.tagList;
+    store.tagList;
     this.record.tags = value;
   }
 
@@ -48,7 +49,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    window.creatRecord(this.record)
+    store.creatRecord(this.record)
   }
 }
 </script>
