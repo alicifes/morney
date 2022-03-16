@@ -6,7 +6,7 @@
     <div class="notes">
       <FormItem @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
     </div>
-    <Tags :data-source="tags" @update:value="onUpdateTags"/>
+    <Tags />
   </Layout>
 </template>
 
@@ -21,7 +21,7 @@ import store from '@/store/index2';
 
 const version = window.localStorage.getItem('version') || '0';
 if (version === '0.0.1') {  //数据迁移
-  const recordList = store.recordList;
+  const recordList = store.fetchRecords();
   recordList.forEach(record => {
     record.createdAt = new Date(2020, 1, 1);
   });
@@ -32,17 +32,16 @@ window.localStorage.setItem('version', '0.0.2');
 @Component({
   components: {
     Types, Tags, FormItem, NumberPad
+  },
+  computed:{
+    recordList(){
+      return store.recordList   //监听
+    }
   }
 })
 export default class Money extends Vue {
-  recordList = store.recordList;
-  tags = store.tagList;
+  //recordList = store.recordList; //将对象的地址进行复制
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
-
-  onUpdateTags(value: string []) {
-    store.tagList;
-    this.record.tags = value;
-  }
 
   onUpdateNotes(value: string) {
     this.record.notes = value;
