@@ -17,11 +17,14 @@ type TagListModel = {
   save: () => void,
   remove: (id: string) => boolean,
 }
-interface Window{
- tagList:Tag[];
- creatTag:(name:string)=>void;
- removeTag:(name:string)=>boolean;
- updateTag:TagListModel['update'];   //这两个的格式相同
-  findTag:(id:string)=>Tag|undefined;
+
+interface Window {
+  tagList: Tag[];
+  creatTag: (name: string) => void;
+  removeTag: (name: string) => boolean;
+  updateTag: TagListModel['update'];   //这两个的格式相同
+  findTag: (id: string) => Tag | undefined;
+  recordList:RecordItem[];
+  creatRecord:(record:RecordItem)=>void;
 }
 
