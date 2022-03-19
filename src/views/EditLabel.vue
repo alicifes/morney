@@ -29,6 +29,7 @@ export default class EditLabel extends Vue {
     return this.$store.state.currentTag;
   }
   created() {
+    this.$store.commit('fetchTags');
     const id = this.$route.params.id;
     this.$store.commit('setCurrentTag', id);
     if (!this.tag) {
@@ -38,14 +39,14 @@ export default class EditLabel extends Vue {
 
   updateTag(name: string) {
     if (this.tag) {
+      this.$store.commit('updateTag',{id:this.tag.id,name})
       //store.updateTag(this.tag.id,name);
     }
   }
 
   remove() {
     if (this.tag) {
-      //todo
-      return;
+      this.$store.commit('removeTag',this.tag.id)
       //if(store.removeTag(this.tag.id)){
       //this.goBack();
       //     } else {
