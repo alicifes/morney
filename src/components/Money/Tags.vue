@@ -18,19 +18,17 @@ import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import tagHelper from '@/mixins/tagHelper';
 
-@Component({
-  computed:{
-    tagList() {
-      return this.$store.state.tagList;
-    }
-  }
-})
-export default class Tags extends mixins(tagHelper){
+@Component
+export default class Tags extends mixins(tagHelper) {
 
   selectedTags: string[] = [];
 
-  created(){
-   this.$store.commit('fetchTags');
+  get tagList() {
+    return this.$store.state.tagList;
+  }
+
+  created() {
+    this.$store.commit('fetchTags');
   }
 
   toggle(tag: string) {  //注意不能直接操作dom

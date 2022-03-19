@@ -3,10 +3,10 @@
     <div class="navBar">
       <Icon class="leftIcon" name="left" @click="goBack"/>
       <span class="title">编辑标签</span>
-      <Icon class="rightIcon" />
+      <Icon class="rightIcon"/>
     </div>
     <div class="form-wrapper">
-      <FormItem field-name="标签名" placeholder="请输入标签名" :value = "tag.name" @update:value ="updateTag"/>
+      <FormItem field-name="标签名" placeholder="请输入标签名" :value="tag.name" @update:value="updateTag"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -14,34 +14,38 @@
   </Layout>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
 @Component({
-  components: {Button, FormItem}
+  components: {Button, FormItem},
 })
 export default class EditLabel extends Vue {
-  //todo
-  tag = '';
-
   //tag= store.findTag(this.$route.params.id);
+  get tag(){   //这里使用es6的get语法
+    return this.$store.state.currentTag;
+  }
   created() {
+    const id = this.$route.params.id;
+    this.$store.commit('setCurrentTag', id);
     if (!this.tag) {
       this.$router.replace('/404');
     }
   }
-  updateTag(name:string){
-    if(this.tag){
+
+  updateTag(name: string) {
+    if (this.tag) {
       //store.updateTag(this.tag.id,name);
     }
   }
+
   remove() {
     if (this.tag) {
       //todo
-      return
+      return;
       //if(store.removeTag(this.tag.id)){
       //this.goBack();
       //     } else {
@@ -80,11 +84,13 @@ export default class EditLabel extends Vue {
     width: 24px;
   }
 }
-.form-wrapper{
+
+.form-wrapper {
   background-color: white;
   margin-top: 8px;
 }
-.button-wrapper{
+
+.button-wrapper {
   text-align: center;
   padding: 16px;
   margin-top: 44-16px;

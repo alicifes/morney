@@ -32,14 +32,12 @@ import {Component } from 'vue-property-decorator';
   components: {
     Types, Tags, FormItem, NumberPad
   },
-  computed:{
-    recordList(){
-      return this.$store.state.recordList//监听
-    }
-  }
 })
 export default class Money extends Vue {
   //recordList = store.recordList; //将对象的地址进行复制
+  get recordList(){
+    return this.$store.state.recordList//监听
+  }
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
   created(){
