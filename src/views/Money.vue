@@ -17,17 +17,16 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component } from 'vue-property-decorator';
-import store from '@/store/index2';
 
-const version = window.localStorage.getItem('version') || '0';
-if (version === '0.0.1') {  //数据迁移
-  const recordList = store.fetchRecords();
-  recordList.forEach(record => {
-    record.createdAt = new Date(2020, 1, 1);
-  });
-  window.localStorage.setItem('recordList',JSON.stringify(recordList));
-}
-window.localStorage.setItem('version', '0.0.2');
+// const version = window.localStorage.getItem('version') || '0';
+// if (version === '0.0.1') {  //数据迁移
+//   //const recordList = store.fetchRecords();
+//   recordList.forEach(record => {
+//     record.createdAt = new Date(2020, 1, 1);
+//   });
+//   window.localStorage.setItem('recordList',JSON.stringify(recordList));
+// }
+// window.localStorage.setItem('version', '0.0.2');
 
 @Component({
   components: {
@@ -35,7 +34,7 @@ window.localStorage.setItem('version', '0.0.2');
   },
   computed:{
     recordList(){
-      return store.recordList   //监听
+      return this.$store.state.recordList//监听
     }
   }
 })
@@ -43,12 +42,16 @@ export default class Money extends Vue {
   //recordList = store.recordList; //将对象的地址进行复制
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
+  created(){
+   this.$store.commit('fetchRecords')
+    console.log(this.$store.state.recordList);
+  }
   onUpdateNotes(value: string) {
     this.record.notes = value;
   }
 
   saveRecord() {
-    store.creatRecord(this.record)
+    this.$store.commit('createRecord',this.record)
   }
 }
 </script>
