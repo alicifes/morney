@@ -18,6 +18,7 @@ const store = new Vuex.Store({
       const record2: RecordItem = clone(record);
       record2.createdAt = new Date();
       state.recordList.push(record2);
+      console.log(state.recordList);
       store.commit('saveRecords');
       //recordStore.saveRecords();
     },
@@ -25,7 +26,7 @@ const store = new Vuex.Store({
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
     fetchTags(state) {
-      return state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
     },
     creatTag(state, name: string) {
       const names = state.tagList.map(item => item.name);
@@ -40,7 +41,7 @@ const store = new Vuex.Store({
       return 'success';
     },
     saveTags(state) {
-      window.localStorage.setItem('recordList', JSON.stringify(state.tagList));
+      window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     }
   },
   actions: {},
