@@ -3,8 +3,8 @@
     <Tabs :data-source="recordTypeList" class="type" :value.sync="type" class-prefix="type"/>
     <Tabs :data-source="intervalList" :value.sync="interval" class-prefix="interval"/>
     <ol>
-      <li v-for="(group,index) in result" :key="index">
-        <h3 class="tittle">{{ group.title }}</h3>
+      <li v-for="group in result" :key="group.title">
+        <h3 class="tittle">{{ beautify(group.title) }}</h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{ tagString(item.tags)}}</span>
@@ -24,6 +24,8 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
+import dayjs from 'dayjs';
+
 
 @Component({
   components: {
@@ -36,18 +38,34 @@ export default class Statistics extends Vue {
   recordTypeList = recordTypeList;
   interval = 'day';
 
+  beautify(string:string){
+    const day = dayjs(string);
+    const now = dayjs();
+    if(day.isSame(now,'day')){
+     return '今天'
+    }else if(day.isSame(now.subtract(1,'day'),'day')){
+      return '昨天'
+    }else if(day.isSame(now.subtract(2,'day'),'day')){
+      return '前天'
+    }else if(day.isSame(now,'year')){
+      return dayjs().format('M月D日')
+    }
+    return dayjs().format('YYYY年M月D日')
+  }
+
+  // eslint-disable-next-line no-undef
   tagString(tags:Tag[]){
     return tags.length===0?'无':tags.join(',')
   }
 
   get recordList() {
+    // eslint-disable-next-line no-undef
     return (this.$store.state as RootState).recordList;
   }
 
   get result() {
-    //return this.recordList;
     const {recordList} = this;
-    type HashTableValue = { title: string, items: RecordList[] };
+    type HashTableValue = { title: string, items: RecordItem[] };
 
 
     const hashTable: { [key: string]: HashTableValue } = {};

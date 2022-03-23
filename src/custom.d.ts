@@ -23,6 +23,7 @@ type RootState = {
   currentTag?:Tag,
 }
 
+
 interface Window {
   store: {
     tagList: Tag[];
