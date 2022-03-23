@@ -3,7 +3,7 @@ type RecordItem = {
   notes: string;
   type: string;  //数据类型
   amount: number;
-  createdAt?: Date;
+  createdAt?: string ;
 }
 type Tag = {
   id: string;
@@ -17,16 +17,21 @@ type TagListModel = {
   save: () => void,
   remove: (id: string) => boolean,
 }
+type RootState = {
+  recordList: RecordItem[],
+  tagList: Tag[],
+  currentTag?:Tag,
+}
 
 interface Window {
-  store:{
+  store: {
     tagList: Tag[];
     creatTag: (name: string) => void;
     removeTag: (name: string) => boolean;
     updateTag: TagListModel['update'];   //这两个的格式相同
     findTag: (id: string) => Tag | undefined;
-    recordList:RecordItem[];
-    creatRecord:(record:RecordItem)=>void;
-  }
+    recordList: RecordItem[];
+    creatRecord: (record: RecordItem) => void;
+  };
 }
 
