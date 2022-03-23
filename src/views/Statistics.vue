@@ -1,10 +1,11 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" class="type" :value.sync="type" class-prefix="type"/>
-    <Tabs :data-source="intervalList" :value.sync="interval" class-prefix="interval"/>
     <ol>
-      <li v-for="group in result" :key="group.title">
-        <h3 class="tittle">{{ beautify(group.title) }}</h3>
+      <li v-for="(group,index) in groupedList" :key="index">
+        <h3 class="tittle">{{ beautify(group.title) }}
+          <span>￥{{group.total}}</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{ tagString(item.tags)}}</span>
@@ -22,9 +23,9 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
-import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
 import dayjs from 'dayjs';
+import clone from '@/lib/clone';
 
 
 @Component({
@@ -34,9 +35,7 @@ import dayjs from 'dayjs';
 })
 export default class Statistics extends Vue {
   type = '+';
-  intervalList = intervalList;
   recordTypeList = recordTypeList;
-  interval = 'day';
 
   beautify(string:string){
     const day = dayjs(string);
@@ -63,18 +62,33 @@ export default class Statistics extends Vue {
     return (this.$store.state as RootState).recordList;
   }
 
-  get result() {
+  get groupedList() {
     const {recordList} = this;
-    type HashTableValue = { title: string, items: RecordItem[] };
-
-
-    const hashTable: { [key: string]: HashTableValue } = {};
-    for (let i = 0; i < recordList.length; i++) {
-      const [date, time] = recordList[i].createdAt!.split('T');
-      hashTable[date] = hashTable[date] || {title: date, items: []}; //如果为空就等于一个数组
-      hashTable[date].items.push(recordList[i]);
+    if(recordList.length=== 0 ){return []}
+    const newList = clone(recordList).filter(t=>t.type===this.type).sort((a,b)=>dayjs(b.createdAt).valueOf()-dayjs(a.createdAt).valueOf());
+    type Result={title:string,total?:number,items:RecordItem[]} []
+    const result:Result = [{title:dayjs(newList[0].createdAt).format('YYYY-MM-DD'),items:[newList[0]]}]
+    for(let i = 0;i<newList.length;i++){
+      const current = newList[i];
+      const last =  result[result.length-1];
+      if(dayjs(last.title).isSame( dayjs(current.createdAt),'day')){
+       last.items.push(current)
+      }else {
+        result.push({title:dayjs(current.createdAt).format('YYYY-MM-DD'),items:[current]});
+      }
     }
-    return hashTable;
+    result.map(group=>{
+      group.total = group.items.reduce((sum,item)=>sum+=item.amount,0)
+    })
+    return result;
+    // type HashTableValue = { title: string, items: RecordItem[] };
+    // const hashTable: { [key: string]: HashTableValue } = {};
+    // for (let i = 0; i < recordList.length; i++) {
+    //   const [date, time] = recordList[i].createdAt!.split('T');
+    //   hashTable[date] = hashTable[date] || {title: date, items: []}; //如果为空就等于一个数组
+    //   hashTable[date].items.push(recordList[i]);
+    // }
+    // return hashTable;
   }
 
   beforeCreate() {
@@ -110,10 +124,10 @@ export default class Statistics extends Vue {
 
 ::v-deep {
   .type-tabs-item {
-    background: white;
+    background: #c4c4c4;
 
     &.selected {
-      background: #c4c4c4;
+      background:white;
 
       &::after {
         display: none;
