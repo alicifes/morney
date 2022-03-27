@@ -6,7 +6,6 @@
       <FormItem  field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
     </div>
     <Tags :value.sync="record.tags"/>
-    {{record}}
   </Layout>
 </template>
 

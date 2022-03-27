@@ -6,15 +6,12 @@ import router from '@/router';
 
 Vue.use(Vuex);
 
-type RootState = {
-  recordList: RecordItem[],
-  tagList: Tag[],
-  currentTag?: Tag,
-}
+
 const store = new Vuex.Store({
   state: {
     recordList: [],
     createRecordError:null,
+    createTagError:null,
     tagList: [],
     currentTag: undefined,
   } as RootState,
@@ -46,9 +43,12 @@ const store = new Vuex.Store({
       }
     },
     creatTag(state, name: string) {
+      state.createTagError = null;
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
-        window.alert('请输入不同的标签名称');
+        //window.alert('请输入不同的标签名称');
+        state.createTagError = new Error('tag name duplicated');
+        return
       }
       const id = createId().toString();
       state.tagList.push({id, name: name});
@@ -63,7 +63,9 @@ const store = new Vuex.Store({
       if (idList.indexOf(id) >= 0) {
         const names = store.state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
-          window.alert('标签名重复');
+          state.createTagError = new Error('tag name duplicated');
+          return
+          //window.alert('标签名重复');
           //return 'duplicated';
         } else {
           const tag = state.tagList.filter(item => item.id === id)[0];
