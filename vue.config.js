@@ -1,6 +1,7 @@
 
 const path = require('path')
 module.exports = {
+  publicPath:process.env.NODE_ENV==='production'?'/morney-website/':'/',
   lintOnSave: false,
   chainWebpack:config =>{
     const dir = path.resolve(__dirname,'src/assets/icons')  //首先确定当前处于哪个目录
